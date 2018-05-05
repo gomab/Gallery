@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    <br>
+   <div class="row">
+       <h3>Afrika images</h3>
+       <div class="row">
+           {% for image in randomAfrika %}
+               <div class="col-sm-12 col-md-6">
+                   <a href="{{ path('detail') }}">
+                       <img src="images/{{ image }}" alt="..." class="img-thumbnail">
+                   </a>
+               </div>
+           {% endfor %}
+       </div>
+   </div>
+    <hr>
+
+    <div class="row">
+        <h3>Asia images</h3>
+        <div class="row">
+            {% for image in randomAsia %}
+                <div class="col-sm-12 col-md-6">
+                    <a href="{{ path('detail') }}">
+                        <img src="images/{{ image }}" alt="..." class="img-thumbnail">
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <hr>
+
+    <div class="row">
+        <h3>Europe images</h3>
+        <div class="row">
+            {% for image in randomEurope %}
+                <div class="col-sm-12 col-md-6">
+                    <a href="{{ path('detail') }}">
+                        <img src="images/{{ image }}" alt="..." class="img-thumbnail">
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <hr>
+
+    <div class="row">
+        <h3>All Images</h3>
+        <div class="row">
+            {% for image in randomImages %}
+                <div class="col-sm-6 col-md-3">
+                    <div class="">
+                        <a href="{{ path('detail') }}">
+                            <img src="images/{{ image }}" alt="..." class="img-thumbnail">
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}
