@@ -3,46 +3,22 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-    <br>
+   <br>
    <div class="row">
        <h3>Afrika images</h3>
-       <div class="row">
-           {% for image in randomAfrika %}
-               <div class="col-sm-12 col-md-6">
-                   <a href="{{ path('detail') }}">
-                       <img src="images/{{ image }}" alt="..." class="img-thumbnail">
-                   </a>
-               </div>
-           {% endfor %}
-       </div>
+       {% include 'home/top-category.html.twig' with {'images': randomAfrika} %}
    </div>
     <hr>
 
     <div class="row">
         <h3>Asia images</h3>
-        <div class="row">
-            {% for image in randomAsia %}
-                <div class="col-sm-12 col-md-6">
-                    <a href="{{ path('detail') }}">
-                        <img src="images/{{ image }}" alt="..." class="img-thumbnail">
-                    </a>
-                </div>
-            {% endfor %}
-        </div>
+        {% include 'home/top-category.html.twig' with {'images': randomAsia} %}
     </div>
     <hr>
 
     <div class="row">
         <h3>Europe images</h3>
-        <div class="row">
-            {% for image in randomEurope %}
-                <div class="col-sm-12 col-md-6">
-                    <a href="{{ path('detail') }}">
-                        <img src="images/{{ image }}" alt="..." class="img-thumbnail">
-                    </a>
-                </div>
-            {% endfor %}
-        </div>
+        {% include 'home/top-category.html.twig' with {'images': randomEurope} %}
     </div>
     <hr>
 
