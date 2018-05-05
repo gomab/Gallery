@@ -1,0 +1,13 @@
+$primary : yellow;
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+$color_head : yellow;
+
+body{
+  background: silver;
+
+  h4{
+    color: $color_head;
+  }
+}
