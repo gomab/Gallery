@@ -6,9 +6,14 @@
         {% for image in images %}
             <div class="col-sm-6 col-md-4">
                 <a href="">
-                    <img src="build/images/{{ image }}" alt="..." class="img-thumbnail">
+                    <img src="images/{{ image }}" alt="..." class="img-thumbnail">
                 </a>
             </div>
         {% endfor %}
+    </div>
+
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(images) }}
     </div>
 {% endblock %}
