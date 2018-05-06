@@ -4,12 +4,14 @@ namespace App\Command;
 
 use App\Entity\Image;
 use Doctrine\ORM\EntityManager;
+use \Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-//use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Console\Style\SymfonyStyle;
 //use Symfony\Component\Console\Input\InputOption;
 //use Symfony\Component\Console\Input\InputArgument;
+
 
 class SetupImagesCommand extends Command
 {
@@ -38,25 +40,67 @@ class SetupImagesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $io = new SymfonyStyle($input, $output);
+
         $images = glob($this->projectDir . '/public/images/*.*');
+
+        $imagesCount = count($images);
+
+        if ($imagesCount === 0) {
+            $io->warning('No Images found');
+
+            return false;
+        }
+
+
+        $io->title('Gomab: Importation des images');
+        $io->progressStart($imagesCount);
+
 
         //exit(\Doctrine\Common\Util\Debug::dump($images));
 
+        $fileNames = [];
+
         foreach ($images as $image){
+            //exit(\Doctrine\Common\Util\Debug::dump(pathinfo($image)));
+            [
+              'basename' => $filename,
+              'filename' => $slug
+            ] = pathinfo($image);
+
+            [
+                0 => $width,
+                1 => $height
+            ]= getimagesize($image);
+
             $img = new Image();
             $img->setFilename($image);
             $img->setSlug($image);
-            $img->setHeight(1080);
-            $img->setWidth(1920);
-                //->setHeight(108)
-                ;
+            $img->setHeight($width);
+            $img->setWidth($height);
 
             //$this->em->persist($img);
             $this->em->persist($img);
+            $io->progressAdvance();
+
+            $fileNames[] = [$filename];
         }
         $this->em->flush();
 
-        $output->writeln('Gomab command result');
+        $io->progressFinish();
+
+        $table = new Table($output);
+        $table
+            ->setHeaders(['Filename'])
+            ->setRows($fileNames)
+        ;
+        $table->render();
+
+        $io->success(sprintf('Added %d wallpapers, nice one.', $imagesCount));
+
+
+
+        //$output->writeln('Gomab command result');
         /**
          * $io = new SymfonyStyle($input, $output);
         $arg1 = $input->getArgument('arg1');
